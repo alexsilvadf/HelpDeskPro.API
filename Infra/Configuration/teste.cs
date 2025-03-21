@@ -8,5 +8,6 @@ namespace Infra.Configuration
 {
     internal class teste
     {
+        public int MyProperty { get; set; }
     }
 }
