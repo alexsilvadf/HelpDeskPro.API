@@ -9,7 +9,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline. alex
+// Configure the HTTP request pipeline. alex teste
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
