@@ -14,3 +14,4 @@ Onde os usuários podem obter ajuda com seu projeto?
 	
 Quem mantém e contribui com o projeto?
 	Este projeto é mantido por Alex Dev e comunidade de desenvolvedores
+	
