@@ -12,5 +12,9 @@ namespace HDP.Core.Entidade
     {     
         public string? Nome { get; set; }
         public StatusEnum Status { get; set; }
+        public string? UsuarioInclusao { get; set; }
+        public DateTime? DataHoraInclusao { get; set; }
+        public string? UsuarioAlteracao { get; set; }
+        public DateTime? DataHoraAlteracao { get; set; }
     }
 }
