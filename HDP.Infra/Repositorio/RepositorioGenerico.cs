@@ -1,4 +1,5 @@
-﻿using HDP.Core.Interface;
+﻿using HDP.Application.Interfaces;
+using HDP.Core.Interface;
 using HDP.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,10 +13,12 @@ namespace HDP.Infra.Repositorio
     public class RepositorioGenerico<T> : IRepositorioGenerico<T> where T : class
     {
         private readonly HDPContext _context;
+        private readonly IAutenticationService _autenticationService;
 
-        public RepositorioGenerico(HDPContext context)
+        public RepositorioGenerico(HDPContext context, IAutenticationService autenticationService)
         {
             _context = context;
+            _autenticationService = autenticationService;
         }
 
 
@@ -38,7 +41,43 @@ namespace HDP.Infra.Repositorio
 
         public async Task<bool> SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            var entidadesCriadas = this._context.ChangeTracker
+                                       .Entries()
+                                       .Where(x => typeof(IEntidadeAuditavel).IsAssignableFrom(x.Entity.GetType()) && x.State == EntityState.Added)
+                                       .ToList();
+
+            var entidadesModificadas = this._context.ChangeTracker
+                                      .Entries()
+                                      .Where(x => typeof(IEntidadeAuditavel).IsAssignableFrom(x.Entity.GetType()) && x.State == EntityState.Modified)
+                                      .ToList();
+
+            var usuarioLogado = this._autenticationService.RecuperarUsuario();
+
+            foreach (var entity in entidadesModificadas)
+            {
+                var entidadeAuditavel = (entity.Entity as IEntidadeAuditavel);
+
+                if(entidadeAuditavel != null)
+                {
+                    entidadeAuditavel.UsuarioAlteracao = usuarioLogado.Login;
+                    entidadeAuditavel.DataHoraAlteracao = DateTime.Now;
+                }
+
+            }
+
+            foreach (var entity in entidadesCriadas)
+            {
+                var entidadeAuditavel = (entity.Entity as IEntidadeAuditavel);
+
+                if (entidadeAuditavel != null)
+                {
+                    entidadeAuditavel.UsuarioInclusao = usuarioLogado.Login;
+                    entidadeAuditavel.UsuarioAlteracao = usuarioLogado.Login;
+                    entidadeAuditavel.DataHoraInclusao = DateTime.Now;                   
+                    entidadeAuditavel.DataHoraAlteracao = DateTime.Now;
+                }
+
+            }            
 
             return (await _context.SaveChangesAsync()) > 0;
         }

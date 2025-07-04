@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HDP.Application\HDP.Application.csproj" />
     <ProjectReference Include="..\HDP.Core\HDP.Core.csproj" />
   </ItemGroup>
 

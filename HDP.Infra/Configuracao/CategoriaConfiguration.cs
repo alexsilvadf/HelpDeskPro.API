@@ -17,6 +17,9 @@ namespace HDP.Infra.Configuracao
 
             builder.HasKey(e => e.Id);
 
+            builder.Property(c => c.Id)
+               .ValueGeneratedOnAdd();
+
             builder.Property(e => e.Nome)
                    .IsRequired()
                    .HasMaxLength(100)

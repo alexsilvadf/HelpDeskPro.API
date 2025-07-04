@@ -3,6 +3,7 @@ using HDP.Application.Interfaces;
 using HDP.Core.Entidade;
 using HDP.Core.Interface;
 using HDP.Core.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,23 +25,32 @@ namespace HDP.Application
 
         public async Task<CategoriaViewModelOutput> Adicionar(CategoriaViewModelInput input)
         {
-            if (input.Id.Value == 0)
+            var categoria = await this._repositorio.IQueryable().Where(s => s.Nome == input.Nome).FirstOrDefaultAsync();
+
+            if(categoria == null)
             {
-               var mapping = this._mapper.Map<Categoria>(input);
+                var mapping = this._mapper.Map<Categoria>(input);
 
-               this._repositorio.Adicionar(mapping);
-
-                await this._repositorio.SaveChangesAsync();
+                this._repositorio.Adicionar(mapping);               
 
                 var resultado = this._mapper.Map<CategoriaViewModelOutput>(mapping);
 
                 return resultado;
-
             }
             else
             {
-                return null;
+                categoria.Status = input.Status;
+
+                var resultado = this._mapper.Map<CategoriaViewModelOutput>(categoria);
+
+                await this._repositorio.SaveChangesAsync();
+
+                return resultado;
             }
+
+            
+
+
         }
     }
 }
