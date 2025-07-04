@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HDP.Application.Interfaces
+namespace HDP.Core.Entidade
 {
-    public interface ICategoriaService
+    public class Base
     {
-        
+
     }
 }

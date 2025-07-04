@@ -8,6 +8,7 @@ namespace HDP.Core.Interface
 {
     public class IEntidadeAuditavel
     {
+        public int Id { get; set; }
         string? UsuarioInclusao { get; set; }
         DateTime? DataHoraInclusao { get; set; }
         string? UsuarioAlteracao { get; set; }
