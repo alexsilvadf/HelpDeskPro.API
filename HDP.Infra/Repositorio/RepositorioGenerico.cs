@@ -42,5 +42,10 @@ namespace HDP.Infra.Repositorio
 
             return (await _context.SaveChangesAsync()) > 0;
         }
+
+        public IQueryable<T> IQueryable()
+        {
+            return _context.Set<T>();
+        }
     }
 }

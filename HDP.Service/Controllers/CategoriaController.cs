@@ -1,4 +1,7 @@
-﻿using HDP.Core.ViewModels;
+﻿using HDP.Application.Interfaces;
+using HDP.Core.Entidade;
+using HDP.Core.Interface;
+using HDP.Core.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +11,19 @@ namespace HDP.Service.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        [HttpPost]
-        public async Task<bool> Create([FromBody] CategoriaViewModelInput input)
+        private readonly ICategoriaService _service;
+
+        public CategoriaController(ICategoriaService service)
         {
-            return true;
+            _service = service;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Adicionar([FromBody] CategoriaViewModelInput input)
+        {
+            var retorno = await this._service.Adicionar(input);
+
+            return Ok(retorno);
         }
 
         [HttpPut("{id}")]

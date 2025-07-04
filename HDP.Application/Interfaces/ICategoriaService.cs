@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HDP.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace HDP.Application.Interfaces
 {
     public interface ICategoriaService
     {
-        
+        Task<CategoriaViewModelOutput> Adicionar(CategoriaViewModelInput input);
     }
 }
