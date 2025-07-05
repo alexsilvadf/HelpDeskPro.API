@@ -1,4 +1,5 @@
 using HDP.Infra.Data;
+using HDP.Service.Extensao;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<HDPContext>(options =>
 
 
 builder.Services.AddControllers();
+builder.Services.AdicionarApplicationServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -1,4 +1,7 @@
-﻿using HDP.Core.ViewModels;
+﻿using HDP.Application.Interfaces;
+using HDP.Core.Entidade;
+using HDP.Core.Interface;
+using HDP.Core.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,34 +11,41 @@ namespace HDP.Service.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
+        private readonly ICategoriaService _service;
+
+        public CategoriaController(ICategoriaService service)
+        {
+            _service = service;
+        }
+
         [HttpPost]
-        public async Task<bool> Create([FromBody] CategoriaViewModelInput input)
+        public async Task<IActionResult> Add([FromBody] CategoriaViewModelInput input)
         {
-            return true;
-        }
+            var retorno = await this._service.Adicionar(input);
 
-        [HttpPut("{id}")]
-        public async Task<bool> Update(int id, CategoriaViewModelInput input)
-        {
-            return true;
+            return Ok(retorno);
         }
-
+      
         [HttpGet]
-        public async Task<CategoriaViewModelOutput> GetAll()
+        public async Task<List<CategoriaViewModelOutput>> GetAll()
         {
-            return null;
+            return await this._service.BuscarTodas();
+          
         }
 
         [HttpGet("{id}")]
         public async Task<CategoriaViewModelOutput> GetById(int id)
         {
-            return null;
+            return await this._service.BuscarPorId(id);
         }
 
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> AtivarInativar(int id)
         {
+            var retorno = await this._service.AtivarInativar(id);
+
             return true;
         }
     }
 }
+

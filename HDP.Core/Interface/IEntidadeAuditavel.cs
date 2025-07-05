@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace HDP.Core.Interface
 {
-    public class IEntidadeAuditavel
-    {
+    public interface IEntidadeAuditavel
+    {     
         string? UsuarioInclusao { get; set; }
         DateTime? DataHoraInclusao { get; set; }
         string? UsuarioAlteracao { get; set; }

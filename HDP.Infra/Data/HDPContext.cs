@@ -1,4 +1,5 @@
 ﻿using HDP.Core.Entidade;
+using HDP.Infra.Configuracao;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,15 @@ namespace HDP.Infra.Data
             
         }
 
+        public DbSet<Categoria>? Categoria { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
 
-            // Configurações específicas se necessário
-            modelBuilder.Entity<Categoria>(entity =>
-            {
-                entity.ToTable("Categoria");
-                entity.HasKey(e => e.Id);
-            });           
+            modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
+                    
         }
 
-        public DbSet<Categoria>? Categoria { get; set; }
+       
     }
 }
