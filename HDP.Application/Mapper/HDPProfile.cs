@@ -16,7 +16,9 @@ namespace HDP.Application.Mapper
         {
             this.CreateMap<Categoria, CategoriaViewModelInput>().ReverseMap();
 
-            this.CreateMap<Categoria, CategoriaViewModelOutput>().ReverseMap();
+            //this.CreateMap<Categoria, CategoriaViewModelOutput>().ReverseMap();
+
+            this.CreateMap<Categoria, CategoriaViewModelOutput>();
         }
     }
 }

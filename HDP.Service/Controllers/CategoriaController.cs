@@ -19,34 +19,31 @@ namespace HDP.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Adicionar([FromBody] CategoriaViewModelInput input)
+        public async Task<IActionResult> Add([FromBody] CategoriaViewModelInput input)
         {
             var retorno = await this._service.Adicionar(input);
 
             return Ok(retorno);
         }
-
-        [HttpPut("{id}")]
-        public async Task<bool> Update(int id, CategoriaViewModelInput input)
-        {
-            return true;
-        }
-
+      
         [HttpGet]
-        public async Task<CategoriaViewModelOutput> GetAll()
+        public async Task<List<CategoriaViewModelOutput>> GetAll()
         {
-            return null;
+            return await this._service.BuscarTodas();
+          
         }
 
         [HttpGet("{id}")]
         public async Task<CategoriaViewModelOutput> GetById(int id)
         {
-            return null;
+            return await this._service.BuscarPorId(id);
         }
 
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> AtivarInativar(int id)
         {
+            var retorno = await this._service.AtivarInativar(id);
+
             return true;
         }
     }

@@ -10,5 +10,8 @@ namespace HDP.Application.Interfaces
     public interface ICategoriaService
     {
         Task<CategoriaViewModelOutput> Adicionar(CategoriaViewModelInput input);
+        Task<List<CategoriaViewModelOutput>> BuscarTodas();
+        Task<CategoriaViewModelOutput> BuscarPorId(int id);
+        Task<bool> AtivarInativar(int id);
     }
 }

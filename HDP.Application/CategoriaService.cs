@@ -4,6 +4,7 @@ using HDP.Core.Entidade;
 using HDP.Core.Interface;
 using HDP.Core.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace HDP.Application
 
                 var resultado = this._mapper.Map<CategoriaViewModelOutput>(mapping);
 
+                await this._repositorio.SaveChangesAsync();
+
                 return resultado;
             }
             else
@@ -51,6 +54,45 @@ namespace HDP.Application
             
 
 
+        }
+
+        public async Task<List<CategoriaViewModelOutput>> BuscarTodas()
+        {
+            var categorias = await this._repositorio.IQueryable().ToListAsync();
+
+            var mapping = this._mapper.Map<List<CategoriaViewModelOutput>>(categorias);
+
+            return mapping;
+
+
+        }
+
+        public async Task<bool> AtivarInativar(int id)
+        {
+            var categoria = await this._repositorio.IQueryable().Where(s => s.Id == id).FirstOrDefaultAsync();
+
+            if(categoria == null)
+            {
+                throw new Exception("Categoria não existe");
+            }
+
+            //Nao pode deletar a categoria, fazer consulta nas tabelas filhas para ver se tem registros, senão, ai pode deletar
+            this._repositorio.Deletar(categoria);
+
+            //await this._repositorio.SaveChangesAsync();           
+
+            return true;
+
+
+        }
+
+        public async Task<CategoriaViewModelOutput> BuscarPorId(int id)
+        {
+            var categoria = await this._repositorio.IQueryable().Where(s => s.Id == id).FirstOrDefaultAsync();
+
+            var mapping = this._mapper.Map<CategoriaViewModelOutput>(categoria);
+
+            return mapping;
         }
     }
 }
