@@ -39,10 +39,10 @@ namespace HDP.Service.Controllers
             return await this._service.BuscarPorId(id);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<bool> AtivarInativar(int id)
+        [HttpDelete("{codigo}")]
+        public async Task<bool> AtivarInativar(int codigo)
         {
-            var retorno = await this._service.AtivarInativar(id);
+            var retorno = await this._service.AtivarInativar(codigo);
 
             return true;
         }

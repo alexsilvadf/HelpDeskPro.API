@@ -67,9 +67,9 @@ namespace HDP.Application
 
         }
 
-        public async Task<bool> AtivarInativar(int id)
+        public async Task<bool> AtivarInativar(int codigo)
         {
-            var categoria = await this._repositorio.IQueryable().Where(s => s.Id == id).FirstOrDefaultAsync();
+            var categoria = await this._repositorio.IQueryable().Where(s => s.Id == codigo).FirstOrDefaultAsync();
 
             if(categoria == null)
             {
@@ -79,7 +79,7 @@ namespace HDP.Application
             //Nao pode deletar a categoria, fazer consulta nas tabelas filhas para ver se tem registros, senão, ai pode deletar
             this._repositorio.Deletar(categoria);
 
-            //await this._repositorio.SaveChangesAsync();           
+            await this._repositorio.SaveChangesAsync();           
 
             return true;
 

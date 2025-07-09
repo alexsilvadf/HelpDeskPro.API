@@ -9,7 +9,9 @@ namespace HDP.Core.ViewModels
 {
     public class CategoriaViewModelOutput
     {
+        public int? Codigo { get; set; }
         public string Nome { get; set; }
         public StatusEnum Status { get; set; }
+        public string? StatusDescricao { get; set; }
     }
 }
