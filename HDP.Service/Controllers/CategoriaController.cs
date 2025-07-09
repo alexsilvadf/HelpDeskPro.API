@@ -40,11 +40,11 @@ namespace HDP.Service.Controllers
         }
 
         [HttpDelete("{codigo}")]
-        public async Task<bool> AtivarInativar(int codigo)
+        public async Task<IActionResult> AtivarInativar(int codigo)
         {
             var retorno = await this._service.AtivarInativar(codigo);
 
-            return true;
+            return Ok(new {mensagem = "Registro excluído com sucesso"});
         }
     }
 }
