@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HDP.Application.Interfaces;
 using HDP.Core.Entidade;
+using HDP.Core.Enum;
 using HDP.Core.Interface;
 using HDP.Core.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,12 @@ namespace HDP.Application
 
         public async Task<CategoriaViewModelOutput> Adicionar(CategoriaViewModelInput input)
         {
+            if (input.Nome == null)
+            {
+                throw new Exception("Campo nome obrigatório");
+            }
+
+
             var categoria = await this._repositorio.IQueryable().Where(s => s.Nome == input.Nome).FirstOrDefaultAsync();
 
             if(categoria == null)
@@ -56,16 +63,25 @@ namespace HDP.Application
 
         }
 
-        public async Task<List<CategoriaViewModelOutput>> BuscarTodas()
+        public async Task<List<CategoriaViewModelOutput>> BuscarTodas(StatusEnum? status)
         {
-            var categorias = await this._repositorio.IQueryable().ToListAsync();
+            if(status == null || status == StatusEnum.Todos)
+            {
+                var categorias = await this._repositorio.IQueryable().ToListAsync();
+                var mapping = this._mapper.Map<List<CategoriaViewModelOutput>>(categorias);
 
-            var mapping = this._mapper.Map<List<CategoriaViewModelOutput>>(categorias);
+                return mapping;
+            }
+            else
+            {
+                var categorias = await this._repositorio.IQueryable().Where(s => s.Status == status).ToListAsync();
+                var mapping = this._mapper.Map<List<CategoriaViewModelOutput>>(categorias);
 
-            return mapping;
-
-
+                return mapping;
+            }
         }
+
+        
 
         public async Task<bool> AtivarInativar(int codigo)
         {

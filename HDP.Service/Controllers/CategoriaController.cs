@@ -1,5 +1,6 @@
 ﻿using HDP.Application.Interfaces;
 using HDP.Core.Entidade;
+using HDP.Core.Enum;
 using HDP.Core.Interface;
 using HDP.Core.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -25,12 +26,19 @@ namespace HDP.Service.Controllers
 
             return Ok(retorno);
         }
-      
+
+        //[HttpGet]
+        //public async Task<List<CategoriaViewModelOutput>> GetAll()
+        //{
+        //    return await this._service.BuscarTodas();
+
+        //}
+
         [HttpGet]
-        public async Task<List<CategoriaViewModelOutput>> GetAll()
-        {
-            return await this._service.BuscarTodas();
-          
+        public async Task<List<CategoriaViewModelOutput>> GetAll([FromQuery] StatusEnum? status)
+      {
+            return await this._service.BuscarTodas(status);
+
         }
 
         [HttpGet("{id}")]
@@ -44,7 +52,7 @@ namespace HDP.Service.Controllers
         {
             var retorno = await this._service.AtivarInativar(codigo);
 
-            return Ok(new {mensagem = "Registro excluído com sucesso"});
+            return Ok(new { mensagem = "Registro excluído com sucesso" });
         }
     }
 }
