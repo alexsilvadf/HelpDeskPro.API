@@ -10,6 +10,9 @@ namespace HDP.Application.Interfaces
 {
     public interface IDepartamentoService
     {
+        Task<DepartamentoViewModelOutput> Adicionar(DepartamentoViewModelInput input);
         Task<List<DepartamentoViewModelOutput>> BuscarTodas(StatusEnum status);
+        Task<DepartamentoViewModelOutput> BuscarPorId(int id);
+        Task<bool> AtivarInativar(int id);
     }
 }

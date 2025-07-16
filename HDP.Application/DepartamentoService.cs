@@ -24,6 +24,44 @@ namespace HDP.Application
             _mapper = mapper;
         }
 
+        public async Task<DepartamentoViewModelOutput> Adicionar(DepartamentoViewModelInput input)
+        {
+            if (input.Nome == null)
+            {
+                throw new Exception("Campo nome obrigatório");
+            }
+
+
+            var departamento = await this._repositorio.IQueryable().Where(s => s.Nome == input.Nome).FirstOrDefaultAsync();
+
+            if (departamento == null)
+            {
+                var mapping = this._mapper.Map<Departamento>(input);
+
+                this._repositorio.Adicionar(mapping);
+
+                var resultado = this._mapper.Map<DepartamentoViewModelOutput>(mapping);
+
+                await this._repositorio.SaveChangesAsync();
+
+                return resultado;
+            }
+            else
+            {
+                departamento.Status = input.Status;
+
+                var resultado = this._mapper.Map<DepartamentoViewModelOutput>(departamento);
+
+                await this._repositorio.SaveChangesAsync();
+
+                return resultado;
+            }
+
+
+
+
+        }
+
         public async Task<List<DepartamentoViewModelOutput>> BuscarTodas(StatusEnum status)
         {
             if (status == null || status == StatusEnum.Todos)
@@ -40,6 +78,34 @@ namespace HDP.Application
 
                 return mapping;
             }
+        }
+
+        public async Task<DepartamentoViewModelOutput> BuscarPorId(int id)
+        {
+            var departamento = await this._repositorio.IQueryable().Where(s => s.Id == id).FirstOrDefaultAsync();
+
+            var mapping = this._mapper.Map<DepartamentoViewModelOutput>(departamento);
+
+            return mapping;
+        }
+
+        public async Task<bool> AtivarInativar(int codigo)
+        {
+            var departamento = await this._repositorio.IQueryable().Where(s => s.Id == codigo).FirstOrDefaultAsync();
+
+            if (departamento == null)
+            {
+                throw new Exception("Departamento não existe");
+            }
+
+            //Nao pode deletar a departamento, fazer consulta nas tabelas filhas para ver se tem registros, senão, ai pode deletar
+            this._repositorio.Deletar(departamento);
+
+            await this._repositorio.SaveChangesAsync();
+
+            return true;
+
+
         }
     }
 }
