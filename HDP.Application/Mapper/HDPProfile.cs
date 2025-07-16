@@ -20,6 +20,8 @@ namespace HDP.Application.Mapper
             this.CreateMap<Categoria, CategoriaViewModelOutput>()
                 .ForMember(s => s.Codigo, cfg => cfg.MapFrom(s => s.Id))
                 .ForMember(s => s.StatusDescricao, cfg => cfg.MapFrom(s => s.Status == StatusEnum.Ativo ? "Ativo" : "Inativo"));
+
+            this.CreateMap<Departamento, DepartamentoViewModelOutput>();
         }
     }
 }

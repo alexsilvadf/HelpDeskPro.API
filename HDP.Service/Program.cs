@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowMyOrigin",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200") // Porta padrão Angular
+            policy.WithOrigins("http://localhost:4200")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

@@ -25,14 +25,7 @@ namespace HDP.Service.Controllers
             var retorno = await this._service.Adicionar(input);
 
             return Ok(retorno);
-        }
-
-        //[HttpGet]
-        //public async Task<List<CategoriaViewModelOutput>> GetAll()
-        //{
-        //    return await this._service.BuscarTodas();
-
-        //}
+        }      
 
         [HttpGet]
         public async Task<List<CategoriaViewModelOutput>> GetAll([FromQuery] StatusEnum? status)
