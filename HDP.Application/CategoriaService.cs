@@ -58,9 +58,6 @@ namespace HDP.Application
                 return resultado;
             }
 
-            
-
-
         }
 
         public async Task<List<CategoriaViewModelOutput>> BuscarTodas(StatusEnum? status)

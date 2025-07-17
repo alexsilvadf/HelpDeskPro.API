@@ -12,6 +12,8 @@ namespace HDP.Service.Extensao
             services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IDepartamentoService, DepartamentoService>();
+            services.AddScoped<ICargoService, CargoService>();
+            services.AddScoped<IPerfilService, PerfilService>();
             services.AddScoped<IAutenticationService, AutenticationService>();
 
 

@@ -23,7 +23,21 @@ namespace HDP.Application.Mapper
 
             this.CreateMap<DepartamentoViewModelInput, Departamento>();
 
-            this.CreateMap<Departamento, DepartamentoViewModelOutput>();
+            this.CreateMap<Departamento, DepartamentoViewModelOutput>()
+                  .ForMember(s => s.Codigo, cfg => cfg.MapFrom(s => s.Id))
+                .ForMember(s => s.StatusDescricao, cfg => cfg.MapFrom(s => s.Status == StatusEnum.Ativo ? "Ativo" : "Inativo"));
+
+            this.CreateMap<CargoViewModelInput, Cargo>();
+
+            this.CreateMap<Cargo, CargoViewModelOutput>()
+                  .ForMember(s => s.Codigo, cfg => cfg.MapFrom(s => s.Id))
+                .ForMember(s => s.StatusDescricao, cfg => cfg.MapFrom(s => s.Status == StatusEnum.Ativo ? "Ativo" : "Inativo"));
+
+            this.CreateMap<PerfilViewModelInput, Perfil>();
+
+            this.CreateMap<Perfil, PerfilViewModelOutput>()
+                  .ForMember(s => s.Codigo, cfg => cfg.MapFrom(s => s.Id))
+                .ForMember(s => s.StatusDescricao, cfg => cfg.MapFrom(s => s.Status == StatusEnum.Ativo ? "Ativo" : "Inativo"));
 
 
         }

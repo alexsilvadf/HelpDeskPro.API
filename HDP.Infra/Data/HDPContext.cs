@@ -18,13 +18,17 @@ namespace HDP.Infra.Data
 
         public DbSet<Categoria>? Categoria { get; set; }
         public DbSet<Departamento> Departamento { get; set; }
+        public DbSet<Cargo> Cargo { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
            modelBuilder.ApplyConfiguration(new DepartamentoConfiguration());
-                    
+            modelBuilder.ApplyConfiguration(new CargoConfiguration());
+            modelBuilder.ApplyConfiguration(new PerfilConfiguration());
+
         }
 
        

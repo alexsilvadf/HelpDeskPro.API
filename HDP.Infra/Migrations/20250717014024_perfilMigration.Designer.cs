@@ -4,6 +4,7 @@ using HDP.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HDP.Infra.Migrations
 {
     [DbContext(typeof(HDPContext))]
-    partial class HDPContextModelSnapshot : ModelSnapshot
+    [Migration("20250717014024_perfilMigration")]
+    partial class perfilMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,57 +175,6 @@ namespace HDP.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departamento", "dbo");
-                });
-
-            modelBuilder.Entity("HDP.Core.Entidade.Perfil", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("DataHoraAlteracao")
-                        .IsRequired()
-                        .HasColumnType("DATE")
-                        .HasColumnName("Data_Hora_Alt")
-                        .HasComment("Data Hora Alteração do Registro");
-
-                    b.Property<DateTime?>("DataHoraInclusao")
-                        .IsRequired()
-                        .HasColumnType("DATE")
-                        .HasColumnName("Data_Hora_Inc")
-                        .HasComment("Data Hora Inclusão do Registro");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Nome")
-                        .HasComment("Nome da Categoria");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int")
-                        .HasColumnName("Status")
-                        .HasComment("0 Ativo, 1 Inativo");
-
-                    b.Property<string>("UsuarioAlteracao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("Usuario_Alt")
-                        .HasComment("Usuário de Alteração");
-
-                    b.Property<string>("UsuarioInclusao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("Usuario_Inc")
-                        .HasComment("Usuário de Inclusão");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Perfil", "dbo");
                 });
 #pragma warning restore 612, 618
         }
